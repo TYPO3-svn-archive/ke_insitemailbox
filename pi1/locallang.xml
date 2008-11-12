@@ -12,9 +12,8 @@
 		
 		<languageKey index="de" type="array">
 		
-			
-		
 			<label index="header_attachment">Anhang</label>
+			<label index="header_read">Gelesen</label>
 			<label index="header_subject">Betreff</label>
 			<label index="header_sender">Von</label>
 			<label index="header_recipients">An</label>
@@ -33,6 +32,9 @@
 			<label index="markread">Als gelesen markieren</label>
 			<label index="forward">Weiterleiten</label>
 			<label index="reply">Antworten</label>
+			<label index="readbyall">Gelesen</label>
+			<label index="readbysome">Nicht von allen Empfängern gelesen</label>
+			<label index="readbynone">Nicht gelesen</label>
 			
 			
 			<!-- LOGINFORM -->

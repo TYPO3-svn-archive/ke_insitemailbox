@@ -321,6 +321,7 @@ class tx_keinsitemailbox_pi1 extends tslib_pibase {
 				// fill template markers
 				$tempMarker = array(
 					'attachment' => $attachment,
+					'read' => $this->getReceiptStatus($row['uid'], $row['recipient']),
 					'sender' => $senderLink,
 					'subject' => $singleLink,
 					'date' => $date,
@@ -348,6 +349,7 @@ class tx_keinsitemailbox_pi1 extends tslib_pibase {
 		// get marker fills for inbox
 		$markerArray = array(
 			'header_attachment' => '&nbsp;',
+			'header_read' => '&nbsp;',
 			'header_recipients' => $this->pi_getLL('header_recipients'),
 			'header_subject' => $this->pi_getLL('header_subject'),
 			'header_date' => $this->pi_getLL('header_date'),
@@ -405,40 +407,64 @@ class tx_keinsitemailbox_pi1 extends tslib_pibase {
  	*/ 
  	function initImages() {
 		// attachment icon
+		unset($imageConf);
 		$imageConf['file'] = t3lib_extMgm::siteRelPath($this->extKey).'res/img/attach.png';
 		$imageConf['altText'] = $this->pi_getLL('attachment');
 		$this->attachmentIcon=$this->cObj->IMAGE($imageConf);
 		
 		// delete Icon
+		unset($imageConf);
 		$imageConf['file'] = t3lib_extMgm::siteRelPath($this->extKey).'res/img/bin.png';
 		$imageConf['altText'] = $this->pi_getLL('delete');
 		$this->deleteIcon=$this->cObj->IMAGE($imageConf);
 		
 		// add Icon
+		unset($imageConf);
 		$imageConf['file'] = t3lib_extMgm::siteRelPath($this->extKey).'res/img/add.png';
 		$imageConf['altText'] = $this->pi_getLL('add');
 		$this->addIcon=$this->cObj->IMAGE($imageConf);
 		
 		// mark as read Icon
+		unset($imageConf);
 		$imageConf['file'] = t3lib_extMgm::siteRelPath($this->extKey).'res/img/markread.png';
 		$imageConf['altText'] = $this->pi_getLL('markread');
 		$this->markreadIcon=$this->cObj->IMAGE($imageConf);
 		
 		// forward icon
+		unset($imageConf);
 		$imageConf['file'] = t3lib_extMgm::siteRelPath($this->extKey).'res/img/forward.gif';
 		$imageConf['altText'] = $this->pi_getLL('forward');
 		$this->forwardIcon=$this->cObj->IMAGE($imageConf);
 		
 		// reply icon
+		unset($imageConf);
 		$imageConf['file'] = t3lib_extMgm::siteRelPath($this->extKey).'res/img/reply.gif';
 		$imageConf['altText'] = $this->pi_getLL('reply');
 		$this->replyIcon=$this->cObj->IMAGE($imageConf);
 		
 		// back icon
+		unset($imageConf);
 		$imageConf['file'] = t3lib_extMgm::siteRelPath($this->extKey).'res/img/back.gif';
 		$imageConf['altText'] = $this->pi_getLL('back');
 		$this->backIcon=$this->cObj->IMAGE($imageConf);
 		
+		// read status: all
+		unset($imageConf);
+		$imageConf['file'] = t3lib_extMgm::siteRelPath($this->extKey).'res/img/readbyall.gif';
+		$imageConf['altText'] = $this->pi_getLL('readbyall');
+		$this->readByAllIcon=$this->cObj->IMAGE($imageConf);
+		
+		// read status: some
+		unset($imageConf);
+		$imageConf['file'] = t3lib_extMgm::siteRelPath($this->extKey).'res/img/readbysome.gif';
+		$imageConf['altText'] = $this->pi_getLL('readbysome');
+		$this->readBySomeIcon=$this->cObj->IMAGE($imageConf);
+		
+		// read status: none
+		unset($imageConf);
+		$imageConf['file'] = t3lib_extMgm::siteRelPath($this->extKey).'res/img/readbynone.gif';
+		$imageConf['altText'] = $this->pi_getLL('readbynone');
+		$this->readByNoneIcon=$this->cObj->IMAGE($imageConf);
  	}
 	
 	
@@ -619,10 +645,16 @@ class tx_keinsitemailbox_pi1 extends tslib_pibase {
 	* @param int 	uid of message
 	* @return bool	true if message read, otherwise false
 	*/
-	function messageReadByRecipient($uid) {
+	function messageReadByRecipient($messageUid, $recipientUser='') {
+		
+		// check given user or check current user if not set
+		$recipient = $recipientUser ? $recipientUser : $GLOBALS['TSFE']->fe_user->user['uid'];
+		
+		#debug($recipient);
+		
 		$fields = '*';
 		$table = 'tx_keinsitemailbox_log';
-		$where = 'message="'.intval($uid).'" AND recipient="'.intval($GLOBALS['TSFE']->fe_user->user['uid']).'" AND action="read" ';
+		$where = 'message="'.intval($messageUid).'" AND recipient="'.intval($recipient).'" AND action="read" ';
 		$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery($fields,$table,$where,$groupBy='',$orderBy='',$limit='');
 		$anz = $GLOBALS['TYPO3_DB']->sql_num_rows($res);
 		return $anz ? true : false;
@@ -756,6 +788,32 @@ class tx_keinsitemailbox_pi1 extends tslib_pibase {
 
 		}
 		return $link;    
+ 	}
+	
+	
+	/**
+ 	* check if a sent message was read by the recipient/s
+ 	*
+	* @param string recipients uid(s) 
+ 	*/ 
+ 	function getReceiptStatus($messageUid, $recipients) {
+		$recipients = explode(',', $recipients);
+		#debug($recipients,'RECIPIENTS');
+		$numRecipients = count($recipients);
+		$numRead = 0;
+		foreach ($recipients as $key => $val) {
+			if ($this->messageReadByRecipient($messageUid, $val)) $numRead++; 
+		}
+		
+		#debug($numRead.' / '.$numRecipients,1);
+		
+		// read by all recipients
+		if ($numRead == $numRecipients) return $this->readByAllIcon;
+		// read by some recipients
+		else if ($numRead > 0 && $numRead < $numRecipients) return $this->readBySomeIcon;
+		// read by no recipient
+		else return $this->readByNoneIcon;
+		
  	}
 	
 	
