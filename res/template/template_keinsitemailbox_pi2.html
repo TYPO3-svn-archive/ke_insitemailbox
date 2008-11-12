@@ -1,0 +1,92 @@
+
+<!-- ###FORM### begin -->
+	
+	
+
+	<form method="POST" action="####ACTION###" enctype="multipart/form-data" onSubmit="###ADDITIONALJS_SUBMIT###">
+		###ADDITIONALJS_PRE###
+		<h2>Nachricht verfassen</h2>
+		
+		<div class="errors">###ERRORS###</div><br />
+		
+		<div class="label">###LABEL_RECIPIENTS###</div><div class="field">###RECIPIENTS###</div>
+		<div class="clearer">&nbsp;</div>
+		<div class="label">###LABEL_SUBJECT###</div><div class="field">###SUBJECT###</div>
+		<div class="clearer">&nbsp;</div>
+		<div class="label">###LABEL_BODYTEXT###</div><div class="field">###BODYTEXT###</div>
+		<div class="clearer">&nbsp;</div>
+		<div class="label">###LABEL_ATTACHMENT###</div><div class="field">###ATTACHMENT###</div>
+		<div class="clearer">&nbsp;</div>
+		<div class="label">&nbsp;</div><div class="field"><input type="submit" name="tx_keinsitemailbox_pi2[submit]" value="###SUBMIT###" /></div>
+		###ADDITIONALJS_POST###
+	</form>
+<!-- ###FORM### end -->
+
+
+<!-- ###NO_ACCESS### begin -->
+	###ERRORMESSAGE###<br /><br />
+	###LOGINPAGE###
+<!-- ###NO_ACCESS### end -->
+
+
+<!-- ###ERRORS_TEMPLATE### begin -->
+	###ERROR_GENERAL_TEXT###
+	<ul>
+		<!--###ERROR_ROW### begin --><li>###ERRORTEXT###</li><!-- ###ERROR_ROW### end -->
+	</ul>
+<!-- ###ERRORS_TEMPLATE### end -->
+
+
+
+<!-- ###RESPONSE### begin -->
+	###RESPONSE_MESSAGE###<br /><br />
+	###BACKLINK###
+<!-- ###RESPONSE### end -->
+
+
+
+
+
+
+<!-- ###NOTIFICATION_MAIL### begin -->
+	Hallo ###USERNAME###,<br /><br />
+	<p>Du hast eine Neue Nachricht über die Seite ###SITENAME### erhalten.</p>
+	<p>Besuche den folgenden Link, um die Nachricht einzusehen:</p>
+	<p>###SINGLE_LINK###</p>
+	<p></p>
+	<p>Gruß,<br />###FROM_NAME###</p>
+	
+<!-- ###NOTIFICATION_MAIL### end -->
+
+
+
+
+
+<!-- ###REPLY_PRE### begin -->
+	<br />
+	<br />
+	<p style="padding-left: 15px; ">
+		<span style="display:block; background: #EEE; margin-bottom:10px; ">
+			<b>###REPLY_PRE_TEXT###</b><br />
+			###REPLY_PRE_INFO_SUBJECT_LABEL### ###REPLY_PRE_INFO_SUBJECT###<br />
+			###REPLY_PRE_INFO_FROM### ###REPLY_PRE_INFO_SENDER###<br />
+			###REPLY_PRE_INFO_DATE### ###REPLY_PRE_INFO_SENDDATE###<br />
+		</span>
+		###ORIGINAL_MESSAGE###
+		
+	</p>
+<!-- ###REPLY_PRE### end -->
+
+<!-- ###FORWARD_PRE### begin -->
+	<br />
+	<br />
+	<p style="padding-left: 15px; ">
+		<span style="display:block; background: #EEE; margin-bottom:10px; ">
+			<b>###FWD_PRE_TEXT###</b><br />
+			###FWD_PRE_INFO_SUBJECT_LABEL### ###FWD_PRE_INFO_SUBJECT###<br />
+			###FWD_PRE_INFO_FROM### ###FWD_PRE_INFO_SENDER###<br />
+			###FWD_PRE_INFO_DATE### ###FWD_PRE_INFO_SENDDATE###<br />
+		</span>
+		###FORWARDED_MESSAGE###
+	</p>
+<!-- ###FORWARD_PRE### end -->

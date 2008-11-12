@@ -1,0 +1,151 @@
+/* ALLGEMEIN */
+
+.tx-keinsitemailbox-pi1 *,
+.tx-keinsitemailbox-pi1 a:link,
+.tx-keinsitemailbox-pi1 a:visited {
+	color: black;
+	font-size: 12px;
+}
+
+
+
+
+
+/* INBOX */
+
+.tx-keinsitemailbox-pi1 table.inbox {
+	background: white;
+}
+
+.tx-keinsitemailbox-pi1 table.inbox th {
+	text-align: left;
+	background: #DDD;
+	padding: 4px;
+	border-top: 1px solid #BBB;
+	border-bottom: 1px solid #BBB;
+}
+
+.tx-keinsitemailbox-pi1 table.inbox tr  td{
+	background: white;
+	padding: 4px;
+	border-bottom: 1px solid #BBB;
+}
+
+.tx-keinsitemailbox-pi1 table.inbox tr.read ,
+.tx-keinsitemailbox-pi1 table.inbox tr.read td {
+	font-weight: normal;
+}
+
+.tx-keinsitemailbox-pi1 table.inbox tr.unread, 
+.tx-keinsitemailbox-pi1 table.inbox tr.unread td {
+	font-weight: bold;
+}
+
+.tx-keinsitemailbox-pi1 .formlink {
+	margin-top: 20px;
+}
+
+.tx-keinsitemailbox-pi1 .formlink img {
+	vertical-align: middle;
+}
+
+.tx-keinsitemailbox-pi1 .num-messages {
+	margin-bottom: 20px;
+}
+
+
+/* SINGLE */
+
+.tx-keinsitemailbox-pi1 .toolbar {
+	margin-bottom: 20px;
+	border-top: 1px solid #BBB;
+	border-bottom: 1px solid #BBB;
+	padding: 3px;
+	background: #DDD;
+}
+
+.tx-keinsitemailbox-pi1 h2 {
+	font-size: 150%;
+	font-weight: bold;
+}
+
+.tx-keinsitemailbox-pi1 .infoblock {
+	border-top: 1px solid #DDD;
+	border-bottom: 1px solid #DDD;
+	background: #EEE;
+	margin: 5px 0 5px 0;
+	padding: 5px;
+}
+
+.tx-keinsitemailbox-pi1 .toolbar .function {
+	display:block;
+	margin-right: 15px;
+	float:left;
+}
+
+.tx-keinsitemailbox-pi1 .toolbar .function img {
+	vertical-align: middle;
+	margin-right: 3px;
+}
+
+.tx-keinsitemailbox-pi1 .label {
+	float:left;
+	display:block;
+	width: 150px;
+	font-weight: bold;
+}
+
+.tx-keinsitemailbox-pi1 .value {
+	float:left;
+}
+
+.tx-keinsitemailbox-pi1 .bodytext-value {
+	border: 1px solid #DDD;
+	padding: 5px;
+}
+
+
+.tx-keinsitemailbox-pi1 .value p.bodytext {
+	margin-top:0;
+}
+
+.tx-keinsitemailbox-pi1 .clearer {
+	height: 1px;
+	width: 1px;
+	clear:both;
+	margin-bottom: 10px;
+}
+
+
+
+/* FORM  */
+.tx-keinsitemailbox-pi2 .label {
+	float:left;
+	display:block;
+	width: 150px;
+}
+
+.tx-keinsitemailbox-pi2 .field {
+	float:left;
+}
+
+.tx-keinsitemailbox-pi2 .clearer {
+	height: 1px;
+	width: 1px;
+	clear:both;
+	margin-bottom: 10px;
+}
+
+.tx-keinsitemailbox-pi2 .errors {
+	color: red;
+}
+
+p.reply-pre-text, 
+p.forward-pre-text {
+	border-top: 1px dotted #666;
+}
+
+
+p.reply-pre-text .head {
+	background: #DDD;
+}

@@ -1,0 +1,153 @@
+<!-- ###MENU### begin -->
+	<div class="menu">
+		<form method="post" action="###MENUACTION###" id="menuform">
+			<select name="tx_keinsitemailbox_pi1[mode]" id="mode" onchange="this.form.submit();">
+				<option value="inbox" ###INBOX_SELECTED### >###INBOX_TEXT###</option>
+				<option value="outbox" ###OUTBOX_SELECTED### >###OUTBOX_TEXT###</option>
+			</select>
+		</form>
+	</div>
+<!-- ###MENU### end -->
+
+
+
+
+<!-- ###INBOX### begin -->
+	
+	<div class="num-messages">###NUM_MESSAGES###</div>
+
+	<table class="inbox" border="0" cellspacing="0" cellpadding="0">
+		<tr>
+			<th>###HEADER_ATTACHMENT###</th>
+			<th>###HEADER_SENDER###</th>
+			<th>###HEADER_SUBJECT###</th>
+			<th>###HEADER_DATE###</th>
+			<th>###HEADER_DELETE###</th>
+			<th>###HEADER_MARKREAD###</th>
+			<th>###HEADER_REPLY###</th>
+			<th>###HEADER_FORWARD###</th>
+		</tr>
+		<!-- ###INBOX_ENTRY### begin -->
+		<tr class="###TRCLASS###">
+			<td>###ATTACHMENT###</td>
+			<td>###SENDER###</td>
+			<td>###SUBJECT###</td>
+			<td>###DATE###</td>
+			<td>###DELETELINK###</td>
+			<td>###MARKREADLINK###</td>
+			<td>###REPLYLINK###</td>
+			<td>###FORWARDLINK###</td>
+		</tr>
+		<!-- ###INBOX_ENTRY### end -->
+		<!-- ###INBOX_NO_ENTRIES### begin -->
+		<tr>
+			<td colspan="6">###TEXT###</td>
+		</tr>		
+		<!-- ###INBOX_NO_ENTRIES### end -->
+	</table>
+	
+	<!-- ###NEW_ENTRY### begin -->
+		<div class="formlink">###FORMLINKICON### ###FORMLINK###</div>
+	<!-- ###NEW_ENTRY### end -->
+	
+<!-- ###INBOX### end -->
+
+
+
+<!-- ###NO_ACCESS### begin -->
+	###ERRORMESSAGE###<br /><br />
+	###FORM###
+<!-- ###NO_ACCESS### end -->
+
+
+<!-- ###MESSAGE### begin -->
+	<div class="toolbar">
+		<span class="function">###BACKLINK###</span>
+		<span class="function">###REPLYLINK###</span>
+		<span class="function">###FORWARDLINK###</span>
+		<span class="function">###DELETELINK###</span>
+		<span class="clearer">&nbsp;</span>
+	</div>
+	<h2>###SUBJECT###</h2>
+	<div class="infoblock">
+		<div class="label">###LABEL_SENDER###:</div><div class="value">###SENDER###</div>
+		<div class="clearer">&nbsp;</div>
+		<div class="label">###LABEL_RECIPIENTS###:</div><div class="value"><!-- ###MESSAGE_RECIPIENT### begin -->###USERNAME###<br /><!-- ###MESSAGE_RECIPIENT### end --></div>
+		<div class="clearer">&nbsp;</div>
+		<div class="label">###LABEL_DATE###:</div><div class="value">###DATE###</div>
+		<div class="clearer">&nbsp;</div>
+	</div>
+	<!--<div class="label">###LABEL_BODYTEXT###:</div>--><div class="bodytext-value">###BODYTEXT###</div>
+	<div class="clearer">&nbsp;</div>
+	<!-- ###MESSAGE_ATTACHMENT### begin --><div class="label">###LABEL_ATTACHMENT###</div><div class="value">###ATTACHMENT###</div><!-- ###MESSAGE_ATTACHMENT### end-->
+	<div class="clearer">&nbsp;</div>
+<!-- ###MESSAGE### end -->
+
+
+
+
+<!-- ###OUTBOX### begin -->
+	
+	<div class="num-messages">###NUM_MESSAGES###</div>
+	
+	<table class="inbox" border="0" cellspacing="0" cellpadding="0">
+		<tr>
+			<th>###HEADER_ATTACHMENT###</th>
+			<th>###HEADER_RECIPIENTS###</th>
+			<th>###HEADER_SUBJECT###</th>
+			<th>###HEADER_DATE###</th>
+			<th>###HEADER_FORWARD###</th>
+		</tr>
+		<!-- ###OUTBOX_ENTRY### begin -->
+		<tr>
+			<td>###ATTACHMENT###</td>
+			<td><!-- ###OUTBOX_RECIPIENT### begin -->###USERNAME### <!-- ###OUTBOX_RECIPIENT### end --></td>
+			<td>###SUBJECT###</td>
+			<td>###DATE###</td>
+			<td>###FORWARDLINK###</td>
+		</tr>
+		<!-- ###OUTBOX_ENTRY### end -->
+		<!-- ###OUTBOX_NO_ENTRIES### begin -->
+		<tr>
+			<td colspan="6">###TEXT###</td>
+		</tr>		
+		<!-- ###OUTBOX_NO_ENTRIES### end -->
+	</table>
+	
+	<!-- ###NEW_ENTRY### begin -->
+		<div class="formlink">###FORMLINKICON### ###FORMLINK###</div>
+	<!-- ###NEW_ENTRY### end -->
+	
+<!-- ###OUTBOX### end -->
+
+
+
+
+
+
+
+<!-- ###LOGINFORM### begin -->
+<form action="###LOGINFORM_ACTION###" target="_top" method="post" onsubmit="">
+	<fieldset>
+	<legend>###LOGINFORM_TITLE###</legend>
+	<div>
+		<label for="user">###LOGINFORM_USERNAME###</label>
+		<input type="text" id="user" name="user" value="" />
+	</div>
+
+	<div>
+		<label for="pass">###LOGINFORM_PASSWORD###</label>
+		<input type="password" id="pass" name="pass" value="" />
+	</div>
+	<div>	
+		<input type="submit" name="submit" value="###LOGINFORM_SUBMIT###" />
+	</div>
+	<div class="felogin-hidden">
+		<input type="hidden" name="logintype" value="login" />
+		<input type="hidden" name="pid" value="###LOGINFORM_PID###" />
+		<input type="hidden" name="redirect_url" value="###LOGINFORM_REDIRECT_URL###" />
+		
+	</div>
+	</fieldset>
+</form>
+<!-- ###LOGINFORM### end -->

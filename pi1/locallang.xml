@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3locallang>
+	<meta type="array">
+		<type>module</type>
+		<description>Language labels for plugin &quot;tx_keinsitemailbox_pi1&quot;</description>
+	</meta>
+	<data type="array">
+		<languageKey index="default" type="array">
+			<label index="listFieldHeader_subject">Subject</label>
+		</languageKey>
+		
+		
+		<languageKey index="de" type="array">
+		
+			
+		
+			<label index="header_attachment">Anhang</label>
+			<label index="header_subject">Betreff</label>
+			<label index="header_sender">Von</label>
+			<label index="header_recipients">An</label>
+			<label index="header_date">Gesendet</label>
+			<label index="header_bodytext">Nachricht</label>
+			<label index="no_login">Sie müssen sich einloggen.</label>
+			<label index="no_access">Sie haben keinen Zugriff auf diese Nachricht.</label>
+			<label index="loginpagelink">Zur Login-Seite</label>
+			<label index="no_messages">Keine Nachrichten vorhanden</label>
+			<label index="back">Zurück</label>
+			
+			<!-- ACTIONS AND ALT TEXTS -->
+			<label index="delete">Löschen</label>
+			<label index="attachment">Anhang</label>
+			<label index="add">Neu</label>
+			<label index="markread">Als gelesen markieren</label>
+			<label index="forward">Weiterleiten</label>
+			<label index="reply">Antworten</label>
+			
+			
+			<!-- LOGINFORM -->
+			<label index="loginform_title">Anmelden</label>
+			<label index="loginform_username">Benutzername:</label>
+			<label index="loginform_password">Passwort:</label>
+			<label index="loginform_submit">Anmelden</label>
+			
+			<label index="outbox">Outbox</label>
+			<label index="inbox">Inbox</label>
+			
+			<label index="num_messages_outbox">%d gesendete Nachrichten</label>
+			<label index="num_messages_inbox">%d Nachrichten im Posteingang</label>
+			
+			
+		</languageKey>
+		
+		
+	</data>
+</T3locallang>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3locallang>
+	<meta type="array">
+		<type>module</type>
+		<description>Language labels for extension 'ke_insitemailbox'</description>
+	</meta>
+	<data type="array">
+		<languageKey index="default" type="array">
+			<label index="pi1_title">Show Insite Mailbox</label>
+			<label index="pi1_plus_wiz_description">Adds an insite mailbox to the page</label>
+			<label index="pi2_title">Insite Mails Form</label>
+			<label index="pi2_plus_wiz_description">Form for creating and sending Insite Mails</label>
+		</languageKey>
+		<languageKey index="de" type="array">
+			<label index="pi1_title">Zeige Insite Mailbox</label>
+			<label index="pi1_plus_wiz_description">Fügt eine Insite Mailbox auf der Seite ein</label>
+			<label index="pi2_title">Formular für Insite Mails</label>
+			<label index="pi2_plus_wiz_description">Formular zum Erstellen und Versenden von Insite Mails</label>
+			
+				
+		</languageKey>
+	</data>
+</T3locallang>

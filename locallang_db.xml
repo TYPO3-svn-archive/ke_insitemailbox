@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3locallang>
+	<meta type="array">
+		<type>database</type>
+		<description>Language labels for database tables/fields belonging to extension 'ke_insitemailbox'</description>
+	</meta>
+	<data type="array">
+		<languageKey index="default" type="array">
+			<label index="tx_keinsitemailbox_messages">Insite Messages</label>
+			<label index="tx_keinsitemailbox_messages.subject">Subject</label>
+			<label index="tx_keinsitemailbox_messages.sender">sender</label>
+			<label index="tx_keinsitemailbox_messages.recipient">Recipient</label>
+			<label index="tx_keinsitemailbox_messages.bodytext">bodytext</label>
+			<label index="tx_keinsitemailbox_messages.attachment">Attachment</label>
+			<label index="tx_keinsitemailbox_log">Message Log</label>
+			<label index="tx_keinsitemailbox_log.message">Message</label>
+			<label index="tx_keinsitemailbox_log.recipient">Recipient</label>
+			<label index="tx_keinsitemailbox_log.action">Action</label>
+			<label index="tt_content.list_type_pi1">Show Insite Mailbox</label>
+			<label index="tt_content.list_type_pi2">Insite Mails Form</label>
+		</languageKey>
+		<languageKey index="de" type="array">
+			<label index="tx_keinsitemailbox_messages">Insite Nachrichten</label>
+			<label index="tx_keinsitemailbox_messages.subject">Betreff</label>
+			<label index="tx_keinsitemailbox_messages.sender">Absender</label>
+			<label index="tx_keinsitemailbox_messages.recipient">Empfänger</label>
+			<label index="tx_keinsitemailbox_messages.bodytext">Text</label>
+			<label index="tx_keinsitemailbox_messages.attachment">Anhang</label>
+			<label index="tx_keinsitemailbox_log">Nachrichten-Log</label>
+			<label index="tx_keinsitemailbox_log.message">Nachricht</label>
+			<label index="tx_keinsitemailbox_log.recipient">recipient</label>
+			<label index="tx_keinsitemailbox_log.action">Aktion</label>
+			<label index="tt_content.list_type_pi1">Zeige Insite Mailbox</label>
+			<label index="tt_content.list_type_pi2">Formular für Insite Mails</label>
+		</languageKey>
+	</data>
+</T3locallang>

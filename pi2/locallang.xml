@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<T3locallang>
+	<meta type="array">
+		<type>module</type>
+		<description>Language labels for plugin &quot;tx_keinsitemailbox_pi2&quot;</description>
+	</meta>
+	<data type="array">
+		<languageKey index="default" type="array">
+			<label index="list_mode_1">Mode 1</label>
+		</languageKey>
+		
+		<languageKey index="de" type="array">
+			<label index="label_recipients">Empfänger:</label>
+			<label index="label_sender">Von:</label>
+			<label index="label_subject">Betreff:</label>
+			<label index="label_bodytext">Ihre Nachricht:</label>
+			<label index="label_attachment">Anhang:</label>
+			<label index="label_date">Gesendet:</label>
+			<label index="submit">Abschicken</label>
+			
+			
+			
+			<label index="no_recipient">Es wurde kein Empfänger ausgewählt!</label>
+			<label index="no_subject">Es wurde kein Betreff angegeben!</label>
+			<label index="no_bodytext">Es wurde kein Nachrichtentext angegeben!</label>
+			<label index="no_login">Sie müssen sich einloggen.</label>
+			
+			<label index="response_ok">Die Nachricht wurde gesendet!</label>
+			<label index="response_error">Die Nachricht konnte nicht gesendet werden!</label>
+			<label index="errors_occured">Es sind folgende Fehler aufgetreten:</label>
+			
+			<label index="back">Zurück</label>
+			
+			
+			<label index="reply_pre_text">Ursprüngliche Nachricht</label>
+			<label index="forward_pre_text">Weitergeleitete Nachricht</label>
+			
+			
+		</languageKey>
+		
+	</data>
+</T3locallang>
