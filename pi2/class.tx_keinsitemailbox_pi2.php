@@ -79,6 +79,9 @@ class tx_keinsitemailbox_pi2 extends tslib_pibase {
 		$this->pi_loadLL();
 		$this->pi_USER_INT_obj=1;	// Configuring so caching is not expected. This value means that no cHash params are ever set. We do this, because it's a USER_INT object!
 		
+		$env = 'TYPO3_REQUEST_HOST';
+		debug(t3lib_div::getIndpEnv($env));
+		
 		// overwrite  conf
 		$this->conf = $GLOBALS['TSFE']->tmpl->setup['plugin.']['tx_keinsitemailbox.'];
 		
