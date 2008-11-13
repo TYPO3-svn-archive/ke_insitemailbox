@@ -682,8 +682,11 @@ class tx_keinsitemailbox_pi1 extends tslib_pibase {
 			$data = $this->getMessageData($messageUid);
 			
 			// if set by sender: set notification to sender that message is read by the/one recipient
-			if ($data['notification_read'] == 1) $this->sendNotificationRead($data['uid'], $GLOBALS['TSFE']->fe_user->user['uid']);
-		
+			// only send notification if reading user is a recipient (could also be a sender that reads from outbox)
+			if (t3lib_div::inList($data['recipient'],$GLOBALS['TSFE']->fe_user->user['uid']) && $data['notification_read'] == 1) {
+				$this->sendNotificationRead($data['uid'], $GLOBALS['TSFE']->fe_user->user['uid']);
+			}
+			
 			// mark message as read in the logtable
 			$fields_values = array(
 				'pid' => $this->conf['dataPid'],
@@ -867,7 +870,7 @@ class tx_keinsitemailbox_pi1 extends tslib_pibase {
 		// if sender is not set, use current loggend in user as sender
 		$sender = $from ? $from : $GLOBALS['TSFE']->fe_user->user['uid'];
 		// set default subject if not defined
-		$subj = $subject ? $subject : $this->config['no_subject'];
+		$subj = $subject ? $subject : $this->pi_getLL('no_subject');
 		// set pid to save messsage to if not defined
 		$pid = $pid ? $pid : $this->conf['dataPid'];
 		
@@ -895,14 +898,14 @@ class tx_keinsitemailbox_pi1 extends tslib_pibase {
  	*
  	*/ 
 	function sendNotificationRead($messageUid, $userID) {
-		
+		// get message data from db
 		$data = $this->getMessageData($messageUid);
 		
-		$bodytext = 'gelesen';
+		// genereate content of notification message
+		$bodytext = sprintf($this->pi_getLL('bodytext_read'), $this->getUserData($GLOBALS['TSFE']->fe_user->user['uid'], 'username'), $data['subject']);
 		
-		$this->sendMessage($data['sender'], $bodytext, $this->config['adminUser']);
-		
-		return $content;    
+		if ($this->sendMessage($data['sender'], $bodytext, $this->conf['adminUser'], $this->pi_getLL('subject_read'))) return true;
+		else return false;
  	}
 	
 	

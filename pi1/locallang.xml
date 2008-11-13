@@ -23,6 +23,10 @@
 			<label index="no_access">Sie haben keinen Zugriff auf diese Nachricht.</label>
 			<label index="loginpagelink">Zur Login-Seite</label>
 			<label index="no_messages">Keine Nachrichten vorhanden</label>
+			<label index="no_subject">[Kein Betreff]</label>
+			<label index="subject_read">[Lesebestätigung]</label>
+			<label index="bodytext_read">Der Benutzer "%s" hat die Nachricht "%s" gelesen.</label>
+			
 			<label index="back">Zurück</label>
 			
 			<!-- ACTIONS AND ALT TEXTS -->
