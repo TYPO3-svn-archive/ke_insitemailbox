@@ -1,21 +1,44 @@
+plugin.tx_keinsitemailbox {
+  # FORM PID
+  formPid = 7 
+  
+  # PAGE WITH IN/OUTBOX
+  inboxPid = 5 
+  
+  # DATA PID
+  dataPid = 8 
+  
+  # LOGIN PID
+  loginPid = 10 
 
+  # USERDATA PID
+  userdataPid = 9 
 
-plugin.tx_keinsitemailbox_pi1 {
-	CMD =
-	pidList =
-	recursive =
+  # UID OF MAILBOX ADMIN
+  adminUser = 8 
+
+  # USER OF THESE GROUPS ARE SHOWN AS POSSIBLE RECIPIENTS IN NEW MESSAGE FORM
+  recipientsGroups = 1,2 
+
+  #DEFAULT PREVIEW IMAGE
+  nopreview = EXT:ke_insitemailbox/res/img/no_preview.gif 
+  
+  #ATTACHMENT
+  attachment { 
+    # MAX SIZE OF FILE (BYTES)
+    maxFileSize = 1048576 
+  }
+  thumbnails = jpg,gif,png,pdf,tif
+  thumbnail.file {
+    maxW = 150
+    maxH = 100
+  }
+  
+  # NOTIFICATION OF NEW MESSAGES
+  notification {
+    from_email = dev@kennziffer.intranet
+    from_name = insiteMailbox
+    subject = Neue Nachricht erhalten
+  }
+   
 }
-plugin.tx_keinsitemailbox_pi1.listView {
-	results_at_a_time =
-	maxPages =
-}
-  # Example of default set CSS styles (these go into the document header):
-plugin.tx_keinsitemailbox_pi1._CSS_DEFAULT_STYLE (
-  .tx-keinsitemailbox-pi1 H2 { margin-top: 0px; margin-bottom: 0px; }
-)
-  # Example of how to overrule LOCAL_LANG values for the plugin:
-plugin.tx_keinsitemailbox_pi1._LOCAL_LANG.default {
-  pi_list_searchBox_search = Search!
-}
-  # Example of how to set default values from TS in the incoming array, $this->piVars of the plugin:
-plugin.tx_keinsitemailbox_pi1._DEFAULT_PI_VARS.test = test
