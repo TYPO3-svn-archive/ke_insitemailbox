@@ -65,6 +65,7 @@ class tx_keinsitemailbox_pi2 extends tslib_pibase {
 	
 	
 	
+	
 	/**
 	 * The main method of the PlugIn
 	 *
@@ -77,6 +78,9 @@ class tx_keinsitemailbox_pi2 extends tslib_pibase {
 		$this->pi_setPiVarDefaults();
 		$this->pi_loadLL();
 		$this->pi_USER_INT_obj=1;	// Configuring so caching is not expected. This value means that no cHash params are ever set. We do this, because it's a USER_INT object!
+		
+		// overwrite  conf
+		$this->conf = $GLOBALS['TSFE']->tmpl->setup['plugin.']['tx_keinsitemailbox.'];
 		
 		// include html template
 		$this->defaultTemplateFile = t3lib_extMgm::siteRelPath($this->extKey).'res/template/template_keinsitemailbox_pi2.html';
@@ -540,8 +544,8 @@ class tx_keinsitemailbox_pi2 extends tslib_pibase {
  	function checkAccess() {
 		
 		// link to login page
-		if ($this->conf['loginpage']) {
-			$linkConf['parameter'] = $this->conf['loginpage'];
+		if ($this->conf['loginPid']) {
+			$linkConf['parameter'] = $this->conf['loginPid'];
 			$loginpagelink = $this->cObj->typoLink($this->pi_getLL('loginpagelink'),$linkConf);
 		} else $loginpagelink = '';
 		

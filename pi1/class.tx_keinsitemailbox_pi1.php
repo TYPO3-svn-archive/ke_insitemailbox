@@ -80,6 +80,9 @@ class tx_keinsitemailbox_pi1 extends tslib_pibase {
 		$this->pi_loadLL();		// Loading the LOCAL_LANG values
 		$this->pi_USER_INT_obj=1;	// Configuring so caching is not expected. This value means that no cHash params are ever set. We do this, because it's a USER_INT object!
 		
+		// overwrite  conf
+		$this->conf = $GLOBALS['TSFE']->tmpl->setup['plugin.']['tx_keinsitemailbox.'];
+		
 		// include html template
 		$this->defaultTemplateFile = t3lib_extMgm::siteRelPath($this->extKey).'res/template/template_keinsitemailbox_pi1.html';
 		$this->templateFile = $this->conf['templateFile'] ? $this->conf['templateFile'] : $this->defaultTemplateFile;
@@ -186,7 +189,7 @@ class tx_keinsitemailbox_pi1 extends tslib_pibase {
 				$attachment = !empty($row['attachment']) ? $this->attachmentIcon : '&nbsp;';
 				
 				// get senders username
-				$linkconf['parameter'] = $this->conf['formpage'];
+				$linkconf['parameter'] = $this->conf['formPid'];
 				$linkconf['additionalParams'] = '&tx_keinsitemailbox_pi2[sender]='.intval($row['sender']);
 				$senderLink = $this->cObj->typoLink($this->getUserData($row['sender'], 'username'),$linkconf);
 				
@@ -232,7 +235,7 @@ class tx_keinsitemailbox_pi1 extends tslib_pibase {
 		
 		
 		// formlink icon
-		$linkConf['parameter'] = $this->conf['formpage'];
+		$linkConf['parameter'] = $this->conf['formPid'];
 		$linkConf['useCacheHash'] = false;
 		$formlink = $this->cObj->typoLink($this->pi_getLL('new_message','Nachricht verfassen'),$linkConf);
 		
@@ -298,7 +301,7 @@ class tx_keinsitemailbox_pi1 extends tslib_pibase {
 				$recipients = explode(',', $row['recipient']);
 				$recipientsContent = '';
 				foreach ($recipients as $key => $val) {
-					$linkconf['parameter'] = $this->conf['formpage'];
+					$linkconf['parameter'] = $this->conf['formPid'];
 					$linkconf['additionalParams'] = '&tx_keinsitemailbox_pi2[sender]='.intval($val);
 					$recipientLink = $this->cObj->typoLink($this->getUserData($val, 'username'),$linkconf);
 					
@@ -342,7 +345,7 @@ class tx_keinsitemailbox_pi1 extends tslib_pibase {
 		$numMessages = sprintf($this->pi_getLL('num_messages_outbox'), $anz);
 		
 		// formlink icon
-		$linkConf['parameter'] = $this->conf['formpage'];
+		$linkConf['parameter'] = $this->conf['formPid'];
 		$linkConf['useCacheHash'] = false;
 		$formlink = $this->cObj->typoLink($this->pi_getLL('new_message','Nachricht verfassen'),$linkConf);
 		
@@ -586,8 +589,8 @@ class tx_keinsitemailbox_pi1 extends tslib_pibase {
 	function checkAccess($uid='') {
 		
 		// link to login page
-		if ($this->conf['loginpage']) {
-			$linkConf['parameter'] = $this->conf['loginpage'];
+		if ($this->conf['loginPid']) {
+			$linkConf['parameter'] = $this->conf['loginPid'];
 			$loginpagelink = $this->cObj->typoLink($this->pi_getLL('loginpagelink'),$linkConf);
 		} else $loginpagelink = '';
 		
@@ -743,7 +746,7 @@ class tx_keinsitemailbox_pi1 extends tslib_pibase {
  	function showLoginForm() {
 		
 		// loginform action
-		$linkconf['parameter'] = $this->conf['loginpage'];
+		$linkconf['parameter'] = $this->conf['loginPid'];
  		$loginFormAction = $this->cObj->typoLink_URL($linkconf);
 		
 		$markerArray = array(
@@ -752,7 +755,7 @@ class tx_keinsitemailbox_pi1 extends tslib_pibase {
 			'loginform_username' => $this->pi_getLL('loginform_username'),
 			'loginform_password' => $this->pi_getLL('loginform_password'),
 			'loginform_submit' => $this->pi_getLL('loginform_submit'),
-			'loginform_pid' => $this->conf['userdata'],
+			'loginform_pid' => $this->conf['userdataPid'],
 			'loginform_redirect_url' => $GLOBALS['TSFE']->siteScript,
 		);
 		
@@ -778,7 +781,7 @@ class tx_keinsitemailbox_pi1 extends tslib_pibase {
 		switch ($action) {
 			
 			case 'reply':
-				$linkconf['parameter'] = $this->conf['formpage'];
+				$linkconf['parameter'] = $this->conf['formPid'];
 				$linkconf['additionalParams'] = '&tx_keinsitemailbox_pi2[reply]='.intval($uid);
 				$linktext = $this->replyIcon;
 				$linktext .= $text ? $this->pi_getLL('reply') : '';
@@ -786,7 +789,7 @@ class tx_keinsitemailbox_pi1 extends tslib_pibase {
 				break;
 			
 			case 'forward' :
-				$linkconf['parameter'] = $this->conf['formpage'];
+				$linkconf['parameter'] = $this->conf['formPid'];
 				$linkconf['additionalParams'] = '&tx_keinsitemailbox_pi2[forward]='.intval($uid);
 				$linktext = $this->forwardIcon;
 				$linktext .= $text ? $this->pi_getLL('forward') : '';
