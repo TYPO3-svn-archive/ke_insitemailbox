@@ -256,12 +256,25 @@ class tx_keinsitemailbox_pi2 extends tslib_pibase {
 				} 
 				// no prefill -> select from all users
 				else {
+					$recipientsGroups = explode(',', $this->conf['recipientsGroups']);
+					$listWhere = ' AND (';
+					$i=0;
+					foreach ($recipientsGroups as $key => $groupId) {
+						if ($i>0) $listWhere .= ' OR ';
+						$listWhere .= $GLOBALS['TYPO3_DB']->listQuery('usergroup', $groupId, 'fe_users');
+						$i++;
+					}
+					$listWhere .= ') ';
+					
+					
 					
 					$fields = 'uid,username';
 					$table = 'fe_users';
 					$where = '1=1 ';
+					$where .= 'AND uid<>"'.$this->conf['adminUser'].'" ';
+					$where .= $listWhere;
 					$where .= $this->cObj->enableFields($table);
-					$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery($fields,$table,$where,$groupBy='',$orderBy='',$limit='');
+					$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery($fields,$table,$where,$groupBy='',$orderBy='username',$limit='');
 					$options = '';
 					
 					while ($row=$GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
