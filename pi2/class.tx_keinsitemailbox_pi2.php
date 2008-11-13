@@ -188,6 +188,8 @@ class tx_keinsitemailbox_pi2 extends tslib_pibase {
 			'bodytext' => $this->getFormField('rte', 'bodytext'),
 			'label_attachment' => $this->pi_getLL('label_attachment'),
 			'attachment' => $this->getFormField('files', 'attachment'),
+			'label_notification_read' => $this->pi_getLL('label_notification_read'),
+			'notification_read' => $this->getFormField('checkbox', 'notification_read'),
 			'submit' => $this->pi_getLL('submit'),
 			'action' => $formAction,
 			'ADDITIONALJS_PRE' => $this->additionalJS_initial.'<script type="text/javascript">'. implode(chr(10), $this->additionalJS_pre).'</script>',
@@ -215,7 +217,6 @@ class tx_keinsitemailbox_pi2 extends tslib_pibase {
 		switch($type) {
 			
 			case 'text':
-				
 				$content = '<input type="text" name="'.$this->prefixId.'['.$fN.']" id="'.$fN.'" value="'.$this->piVars[$fN].'">';
 				break;
 			
@@ -234,13 +235,20 @@ class tx_keinsitemailbox_pi2 extends tslib_pibase {
 				$this->PA['itemFormElName'] = $this->prefixId.'['.$fN.']';
 				$this->PA['itemFormElValue'] = $this->piVars[$fN]; // TODO
 				$this->thePidValue = $GLOBALS['TSFE']->id;
-				// add 150px to the RTE width:
-				$this->docLarge = false;
+				
+				// css-eigenschaften für rte mitgeben
+				$this->RTEObj->RTEdivStyle = 'width:450px; height:200px;';
+				
+				// default config laden
+				$tsConfig = $GLOBALS['TSFE']->getPagesTSconfig();
+				$this->thisConfig = $tsConfig['RTE.']['default.']['FE.'];
+				// config anpassen (buttons ausblenden)
+				$this->thisConfig['showButtons'] = 'bold,italic,underline,orderedlist,unorderedlist';
+				
 				$content = $this->RTEObj->drawRTE($this,'',$this->strEntryField,$row=array(), $this->PA, $this->specConf, $this->thisConfig, $this->RTEtypeVal, '', $this->thePidValue);
 				break;
 			
 			case 'selectRecipient':
-				
 				// recipient has to be prefilled
 				if ($this->predefinedRecipient) {
 					$content = $this->getUserData($this->predefinedRecipient, 'username');
@@ -271,6 +279,10 @@ class tx_keinsitemailbox_pi2 extends tslib_pibase {
 			case 'files':
 				// show the form elements for the new files
 				$content .= '<input type="file" id="'.$fN.'" name="'.$fN.'" value="" maxlength="'.$this->conf['attachment.']['maxFileSize'].'">';
+				break;
+				
+			case 'checkbox':
+				$content .= '<input type="checkbox" class="checkbox" name="'.$this->prefixId.'['.$fN.']" value="1" />';
 				break;
 		}
 		
@@ -337,6 +349,7 @@ class tx_keinsitemailbox_pi2 extends tslib_pibase {
 			'bodytext' => $this->piVars['bodytext'],
 			'subject' => $this->sanitizeData($this->piVars['subject']),
 			'attachment' => $attachment,
+			'notification_read' => intval($this->piVars['notification_read']),
 		);
 		
 		// write data into DB

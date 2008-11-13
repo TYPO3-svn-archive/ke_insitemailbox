@@ -16,7 +16,7 @@ $TCA["tx_keinsitemailbox_messages"] = array (
 		'iconfile'          => t3lib_extMgm::extRelPath($_EXTKEY).'icon_tx_keinsitemailbox_messages.gif',
 	),
 	"feInterface" => array (
-		"fe_admin_fieldList" => "hidden, subject, sender, recipient, bodytext, attachment",
+		"fe_admin_fieldList" => "hidden, subject, sender, recipient, bodytext, attachment, notification_read",
 	)
 );
 

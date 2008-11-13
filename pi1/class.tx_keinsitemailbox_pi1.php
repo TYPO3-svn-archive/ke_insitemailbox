@@ -663,31 +663,49 @@ class tx_keinsitemailbox_pi1 extends tslib_pibase {
 	/*
 	* Marks a message as read by the current user
 	*
-	*@param int $uid 	uid of message
+	*@param int $uid
 	*/
-	function markMessageAsRead($uid) {
+	function markMessageAsRead($messageUid) {
 		
-		$fields_values = array(
-			'pid' => $this->conf['dataPid'],
-			'message' => intval($uid),
-			'recipient' => intval($GLOBALS['TSFE']->fe_user->user['uid']),
-			'action' => 'read',
-		);
-		$GLOBALS['TYPO3_DB']->exec_INSERTquery($this->logtable,$fields_values,$no_quote_fields=FALSE);
-	
+		// already marked as read?
+		$where = 'message="'.intval($messageUid).'" ';
+		$where .= 'AND recipient="'.intval($GLOBALS['TSFE']->fe_user->user['uid']).'" ';
+		$where .= 'AND action="read" ';
+ 		$where .= $this->cObj->enableFields($this->logtable);
+ 		$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery('*',$this->logtable,$where,$groupBy='',$orderBy='',$limit='');
+ 		$anz = $GLOBALS['TYPO3_DB']->sql_num_rows($res);
+		
+		// if not already marked as read by user
+		if ($anz == 0) {
+		
+			// get message data from db
+			$data = $this->getMessageData($messageUid);
+			
+			// if set by sender: set notification to sender that message is read by the/one recipient
+			if ($data['notification_read'] == 1) $this->sendNotificationRead($data['uid'], $GLOBALS['TSFE']->fe_user->user['uid']);
+		
+			// mark message as read in the logtable
+			$fields_values = array(
+				'pid' => $this->conf['dataPid'],
+				'message' => intval($messageUid),
+				'recipient' => intval($GLOBALS['TSFE']->fe_user->user['uid']),
+				'action' => 'read',
+			);
+			$GLOBALS['TYPO3_DB']->exec_INSERTquery($this->logtable,$fields_values,$no_quote_fields=FALSE);
+		}
 	}
 	
 	
 	/**
  	* Sets a single message as deleted for a single recipient
 	*
- 	* @param int $uid		uid of message
+ 	* @param int $messageUid	
  	*/ 
- 	function markMessageAsDeleted($uid) {
+ 	function markMessageAsDeleted($messageUid) {
 		
 		$fields_values = array(
 			'pid' => $this->conf['dataPid'],
-			'message' => intval($uid),
+			'message' => intval($messageUid),
 			'recipient' => intval($GLOBALS['TSFE']->fe_user->user['uid']),
 			'action' => 'deleted',
 		);
@@ -699,13 +717,15 @@ class tx_keinsitemailbox_pi1 extends tslib_pibase {
 	/**
  	* Check if message is deleted by a recipient
  	*
-	* @param int $uid		uid of message
+	* @param int $messageUid
 	* @return boolean		true if message is marked as deleted by user, otherwiese false
  	*/ 
- 	function messageDeletedByRecipient($uid) {
+ 	function messageDeletedByRecipient($messageUid) {
 		$fields = '*';
 		$table = 'tx_keinsitemailbox_log';
-		$where = 'message="'.intval($uid).'" AND recipient="'.intval($GLOBALS['TSFE']->fe_user->user['uid']).'" AND action="deleted" ';
+		$where = 'message="'.intval($messageUid).'" '; 
+		$where .= 'AND action="deleted" ';
+		$where .= 'AND recipient="'.intval($GLOBALS['TSFE']->fe_user->user['uid']).'" ';
 		$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery($fields,$table,$where,$groupBy='',$orderBy='',$limit='');
 		$anz = $GLOBALS['TYPO3_DB']->sql_num_rows($res);
 		return $anz ? true : false;
@@ -719,9 +739,12 @@ class tx_keinsitemailbox_pi1 extends tslib_pibase {
  	*/ 
  	function showLoginForm() {
 		
+		// loginform action
+		$linkconf['parameter'] = $this->conf['loginpage'];
+ 		$loginFormAction = $this->cObj->typoLink_URL($linkconf);
+		
 		$markerArray = array(
-			#'loginform_action' => $GLOBALS['TSFE']->siteScript,
-			'loginform_action' => 'index.php?10',
+			'loginform_action' => $loginFormAction,
 			'loginform_title' => $this->pi_getLL('loginform_title'),
 			'loginform_username' => $this->pi_getLL('loginform_username'),
 			'loginform_password' => $this->pi_getLL('loginform_password'),
@@ -816,6 +839,71 @@ class tx_keinsitemailbox_pi1 extends tslib_pibase {
 		
  	}
 	
+	/**
+ 	* Get data from db for single message
+ 	*
+	* @param int	uid of message
+	* @return array
+ 	*/ 
+ 	function getMessageData($uid) {
+		$fields = '*';
+ 		$where = 'uid="'.intval($uid).'" ';
+ 		$where .= $this->cObj->enableFields($this->table);
+ 		$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery($fields,$this->table,$where,$groupBy='',$orderBy='',$limit='1');
+		return $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res);
+ 	}
+	
+	
+	/**
+ 	* Send message to single user
+ 	*
+	* @param int $to	uid of recipient user
+	* @param int $from	uid of sender user
+	* @param string $subject	title of message
+	* @param string $bodytext	content of message
+	* @param int $notification_read		set to 1 if sender should be notificated when recipient reads the message
+ 	*/ 
+ 	function sendMessage($to, $bodytext, $from='', $subject='', $notification_read=0, $savePid='') {
+		// if sender is not set, use current loggend in user as sender
+		$sender = $from ? $from : $GLOBALS['TSFE']->fe_user->user['uid'];
+		// set default subject if not defined
+		$subj = $subject ? $subject : $this->config['no_subject'];
+		// set pid to save messsage to if not defined
+		$pid = $pid ? $pid : $this->conf['dataPid'];
+		
+		$fields_values = array(
+			'pid' => $pid,
+			'crdate' => time(),
+			'tstamp' => time(),
+			'cruser_id' => $sender,
+			'sender' => $sender,
+			'recipient' => $to,
+			'bodytext' => $bodytext,
+			'subject' => $this->sanitizeData($subj),
+			'attachment' => '',
+			'notification_read' => $notification_read,		
+		);
+		if ($GLOBALS['TYPO3_DB']->exec_INSERTquery($this->table,$fields_values,$no_quote_fields=FALSE)) return true;
+		else return false;
+ 	}
+	
+	
+	
+	/**
+ 	* Description:
+ 	* Author: Andreas Kiefer (kiefer@kennziffer.com)
+ 	*
+ 	*/ 
+	function sendNotificationRead($messageUid, $userID) {
+		
+		$data = $this->getMessageData($messageUid);
+		
+		$bodytext = 'gelesen';
+		
+		$this->sendMessage($data['sender'], $bodytext, $this->config['adminUser']);
+		
+		return $content;    
+ 	}
 	
 	
 }

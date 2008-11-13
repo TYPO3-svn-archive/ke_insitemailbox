@@ -14,6 +14,7 @@ CREATE TABLE tx_keinsitemailbox_messages (
 	recipient blob NOT NULL,
 	bodytext text NOT NULL,
 	attachment blob NOT NULL,
+	notification_read tinyint(3) DEFAULT '0' NOT NULL,
 	
 	PRIMARY KEY (uid),
 	KEY parent (pid)

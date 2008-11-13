@@ -4,7 +4,7 @@ if (!defined ('TYPO3_MODE')) 	die ('Access denied.');
 $TCA["tx_keinsitemailbox_messages"] = array (
 	"ctrl" => $TCA["tx_keinsitemailbox_messages"]["ctrl"],
 	"interface" => array (
-		"showRecordFieldList" => "hidden,subject,sender,recipient,bodytext,attachment"
+		"showRecordFieldList" => "hidden,subject,sender,recipient,bodytext,attachment,notification_read"
 	),
 	"feInterface" => $TCA["tx_keinsitemailbox_messages"]["feInterface"],
 	"columns" => array (
@@ -73,9 +73,16 @@ $TCA["tx_keinsitemailbox_messages"] = array (
 				"maxitems" => 1,
 			)
 		),
+		"notification_read" => Array (		
+			"exclude" => 1,		
+			"label" => "LLL:EXT:ke_insitemailbox/locallang_db.xml:tx_keinsitemailbox_messages.notification_read",		
+			"config" => Array (
+				"type" => "check",
+			)
+		),
 	),
 	"types" => array (
-		"0" => array("showitem" => "hidden;;1;;1-1-1, subject, sender, recipient, bodytext;;;richtext[paste|bold|italic|underline|formatblock|class|left|center|right|orderedlist|unorderedlist|outdent|indent|link|image]:rte_transform[mode=ts], attachment")
+		"0" => array("showitem" => "hidden;;1;;1-1-1, subject, sender, recipient, bodytext;;;richtext[paste|bold|italic|underline|formatblock|class|left|center|right|orderedlist|unorderedlist|outdent|indent|link|image]:rte_transform[mode=ts], attachment, notification_read")
 	),
 	"palettes" => array (
 		"1" => array("showitem" => "")

@@ -3,7 +3,7 @@
 ########################################################################
 # Extension Manager/Repository config file for ext: "ke_insitemailbox"
 #
-# Auto generated 28-10-2008 11:40
+# Auto generated 13-11-2008 10:14
 #
 # Manual updates:
 # Only the data in the array - anything else is removed by next write.

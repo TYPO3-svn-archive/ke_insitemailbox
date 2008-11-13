@@ -12,6 +12,7 @@
 			<label index="tx_keinsitemailbox_messages.recipient">Recipient</label>
 			<label index="tx_keinsitemailbox_messages.bodytext">bodytext</label>
 			<label index="tx_keinsitemailbox_messages.attachment">Attachment</label>
+			<label index="tx_keinsitemailbox_messages.notification_read">Notification of reading</label>
 			<label index="tx_keinsitemailbox_log">Message Log</label>
 			<label index="tx_keinsitemailbox_log.message">Message</label>
 			<label index="tx_keinsitemailbox_log.recipient">Recipient</label>
@@ -26,6 +27,7 @@
 			<label index="tx_keinsitemailbox_messages.recipient">Empfänger</label>
 			<label index="tx_keinsitemailbox_messages.bodytext">Text</label>
 			<label index="tx_keinsitemailbox_messages.attachment">Anhang</label>
+			<label index="tx_keinsitemailbox_messages.notification_read">Lesebestätigung</label>
 			<label index="tx_keinsitemailbox_log">Nachrichten-Log</label>
 			<label index="tx_keinsitemailbox_log.message">Nachricht</label>
 			<label index="tx_keinsitemailbox_log.recipient">recipient</label>

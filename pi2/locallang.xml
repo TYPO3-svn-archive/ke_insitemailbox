@@ -16,9 +16,8 @@
 			<label index="label_bodytext">Ihre Nachricht:</label>
 			<label index="label_attachment">Anhang:</label>
 			<label index="label_date">Gesendet:</label>
+			<label index="label_notification_read">Lesebestätigung:</label>
 			<label index="submit">Abschicken</label>
-			
-			
 			
 			<label index="no_recipient">Es wurde kein Empfänger ausgewählt!</label>
 			<label index="no_subject">Es wurde kein Betreff angegeben!</label>
@@ -30,7 +29,6 @@
 			<label index="errors_occured">Es sind folgende Fehler aufgetreten:</label>
 			
 			<label index="back">Zurück</label>
-			
 			
 			<label index="reply_pre_text">Ursprüngliche Nachricht</label>
 			<label index="forward_pre_text">Weitergeleitete Nachricht</label>
