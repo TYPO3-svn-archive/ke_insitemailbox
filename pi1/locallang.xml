@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <T3locallang>
 	<meta type="array">
 		<type>module</type>
@@ -8,6 +8,7 @@
 		<languageKey index="default" type="array">
 			<label index="listFieldHeader_subject">Subject</label>
 		</languageKey>
+		
 		
 		
 		<languageKey index="de" type="array">
@@ -28,6 +29,7 @@
 			<label index="bodytext_read">Der Benutzer "%s" hat die Nachricht "%s" gelesen.</label>
 			
 			<label index="back">Zurück</label>
+			<label index="back_to_inbox">Zurück zur Inbox</label>
 			
 			<!-- ACTIONS AND ALT TEXTS -->
 			<label index="delete">Löschen</label>

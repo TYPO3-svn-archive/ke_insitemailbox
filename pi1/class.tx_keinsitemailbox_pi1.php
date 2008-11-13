@@ -24,12 +24,12 @@
 
 /*	
 	### READY ###
-	- Anhänge versenden
-	- Empfänger per Hook vorgeben
+	- AnhÃ¤nge versenden
+	- EmpfÃ¤nger per Hook vorgeben
 	- Gelesene / Ungelesene Nachrichten darstellen
 	- als gelesen markieren in Inbox
-	- Löschen in Inbox
-	- Löschen in Singleview
+	- LÃ¶schen in Inbox
+	- LÃ¶schen in Singleview
 	- Benachrichtigung per E-Mail bei Erhalt neuer Message
 	- Antworten in Inbox
 	- Weiterleiten in Inbox
@@ -41,7 +41,7 @@
 	- Gesendete Nachrichten anzeigen (Outbox)
 	- Access Check bei Forward/Reply
 	- Sortierung in Inbox/Outbox per Klick auf Spalte
-	- Empfängerauswahl bei Erstellung einer Message einschränken ?!?
+	- EmpfÃ¤ngerauswahl bei Erstellung einer Message einschrÃ¤nken ?!?
 	- Eigenen Benutzer beim Verfassen einer Mail nicht mit anbieten ?!?
 	- doppeltes Abschicken des Formulars unterbinden
 	- Pagebrowser in inbox / outbox
@@ -80,6 +80,9 @@ class tx_keinsitemailbox_pi1 extends tslib_pibase {
 		$this->pi_loadLL();		// Loading the LOCAL_LANG values
 		$this->pi_USER_INT_obj=1;	// Configuring so caching is not expected. This value means that no cHash params are ever set. We do this, because it's a USER_INT object!
 		
+		#t3lib_div::devlog('metaCharset', $this->extKey, $severity=0, $GLOBALS['TSFE']->renderCharset);
+		#t3lib_div::devlog('renderCharset', $this->extKey, $severity=0, $GLOBALS['TSFE']->metaCharset);
+		
 		// overwrite  conf
 		$this->conf = $GLOBALS['TSFE']->tmpl->setup['plugin.']['tx_keinsitemailbox.'];
 		
@@ -96,11 +99,16 @@ class tx_keinsitemailbox_pi1 extends tslib_pibase {
 		// init images
 		$this->initImages();
 		
+		// set mode to inbox if not set
+		if ($this->piVars['mode'] == '') $this->piVars['mode'] = 'inbox';
+		
 		// show single message if message chosen
-		if ($this->piVars['message']) $content = $this->showSingle($this->piVars['message']);
+		if ($this->piVars['message']) {
+			$content = $this->showSingle($this->piVars['message']);
+		}
 		// otherwise show inbox/outbox
 		else {
-			if ($this->piVars['mode'] == '') $this->piVars['mode'] = 'inbox';
+			
 		
 			if ($this->piVars['mode'] == 'inbox') {
 				// mark message as deleted
@@ -612,16 +620,20 @@ class tx_keinsitemailbox_pi1 extends tslib_pibase {
 				$row=$GLOBALS['TYPO3_DB']->sql_fetch_assoc($res);
 				
 				// user is recipient
-				if (t3lib_div::inList($row['recipient'], $GLOBALS['TSFE']->fe_user->user['uid'])) $recipient = true;
+				t3lib_div::devlog('user', $this->extKey, $severity=0, $GLOBALS['TSFE']->fe_user->user['uid']);
+				t3lib_div::devlog('RECIPIENT', $this->extKey, $severity=0, $row['recipient']);
+				
 				
 				// user is sender
+				t3lib_div::devlog('SENDER ', $this->extKey, $severity=0, $row['sender']);
 				if ($row['sender'] == $GLOBALS['TSFE']->fe_user->user['uid']) $sender = true;
 				
+				t3lib_div::devlog('MODE', $this->extKey, $severity=0, $this->piVars['mode']);
 				
 				if ( ($this->piVars['mode'] == 'outbox' && !$sender) || ($this->piVars['mode'] == 'inbox' && !$recipient) )   {
 					$content = $this->cObj->getSubpart($this->templateCode,'###NO_ACCESS###');
 					$content = $this->cObj->substituteMarker($content,'###ERRORMESSAGE###',$this->pi_getLL('no_access'));
-					$content = $this->cObj->substituteMarker($content,'###LOGINPAGE###',$loginpagelink);
+					$content = $this->cObj->substituteMarker($content,'###FORM###',$this->linkBackToInbox());
 					return $content;
 				}
 			}
@@ -720,6 +732,7 @@ class tx_keinsitemailbox_pi1 extends tslib_pibase {
  	}
 		
 		
+		
 	/**
  	* Check if message is deleted by a recipient
  	*
@@ -756,7 +769,7 @@ class tx_keinsitemailbox_pi1 extends tslib_pibase {
 			'loginform_password' => $this->pi_getLL('loginform_password'),
 			'loginform_submit' => $this->pi_getLL('loginform_submit'),
 			'loginform_pid' => $this->conf['userdataPid'],
-			'loginform_redirect_url' => $GLOBALS['TSFE']->siteScript,
+			'loginform_redirect_url' => t3lib_div::getIndpEnv('TYPO3_REQUEST_URL'),
 		);
 		
 		$content = $this->cObj->getSubpart($this->templateCode,'###LOGINFORM###');
@@ -910,6 +923,20 @@ class tx_keinsitemailbox_pi1 extends tslib_pibase {
 		if ($this->sendMessage($data['sender'], $bodytext, $this->conf['adminUser'], $this->pi_getLL('subject_read'))) return true;
 		else return false;
  	}
+	
+	
+	
+	/**
+ 	* Description:
+ 	* Author: Andreas Kiefer (kiefer@kennziffer.com)
+ 	*
+ 	*/ 
+ 	function linkBackToInbox() {
+		$linkconf['parameter'] = $this->conf['inboxPid'];
+ 		$link = $this->cObj->typoLink($this->pi_getLL('back_to_inbox'),$linkconf);
+		return $link;    
+ 	}
+	
 	
 	
 }

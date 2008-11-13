@@ -79,6 +79,7 @@ class tx_keinsitemailbox_pi2 extends tslib_pibase {
 		$this->pi_loadLL();
 		$this->pi_USER_INT_obj=1;	// Configuring so caching is not expected. This value means that no cHash params are ever set. We do this, because it's a USER_INT object!
 		
+		
 		// overwrite  conf
 		$this->conf = $GLOBALS['TSFE']->tmpl->setup['plugin.']['tx_keinsitemailbox.'];
 		
@@ -384,7 +385,10 @@ class tx_keinsitemailbox_pi2 extends tslib_pibase {
 			$linkconf['additionalParams'] = '&tx_keinsitemailbox_pi1[message]='.$lastUid;
 			$singleUrl = $this->cObj->typoLink_Url($linkconf);
 			#$singleUrl = $GLOBALS['TSFE']->config['config']['baseUrl'].$singleUrl;
-			$singleUrl = t3lib_div::getIndpEnv('TYPO3_REQUEST_HOST').'/'.$singleUrl;
+			$singleUrl = t3lib_div::getIndpEnv('TYPO3_SITE_URL').'/'.$singleUrl;
+			
+			
+			
 			
 			// send notification mails to recipients
 			foreach ($this->piVars['recipients'] as $key => $val) {
